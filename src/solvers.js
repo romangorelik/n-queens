@@ -101,25 +101,22 @@ window.findNQueensSolution = function(n) {
   let board = new Board ({n: n});
   let solution = board.rows()
 
-  let recurse = function(row, cb) {
+  let recurse = function(row) {
     if (row === n) {
-      return cb(board);
+      return solution = board.rows();
     }
 
     for (let i = 0; i < n; i++) {
       board.togglePiece(row, i);
 
       if(!board.hasAnyQueensConflicts()) {
-        var result = recurse(row + 1, cb);
+        var result = recurse(row + 1);
         if (result) return result;
       }
       board.togglePiece(row, i);
     }
   }
-
-  recurse(0, function(board) {
-    return solution = board.rows();
-  })
+  recurse(0);
 
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
   return solution;
