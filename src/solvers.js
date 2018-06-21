@@ -101,22 +101,23 @@ window.findNQueensSolution = function(n) {
   let board = new Board ({n: n});
   let solution = board.rows()
 
-  var recurse = function (board, startRow, rows, callback) {
-    if (startRow === rows) {
-      return callback(board);
+  let recurse = function(row, cb) {
+    if (row === n) {
+      return cb(board);
     }
 
-    for (var i = 0; i < rows; i++) {
-      board.togglePiece(startRow, i);
-      if (!board.hasAnyQueensConflicts()) {
-        var result = recurse(board, startRow + 1, rows, callback);
-        if (result) return result
+    for (let i = 0; i < n; i++) {
+      board.togglePiece(row, i);
+
+      if(!board.hasAnyQueensConflicts()) {
+        var result = recurse(row + 1, cb);
+        if (result) return result;
       }
-      board.togglePiece(startRow, i);
+      board.togglePiece(row, i);
     }
   }
 
-  recurse(board, 0, n, function(board) {
+  recurse(0, function(board) {
     return solution = board.rows();
   })
 
